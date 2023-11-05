@@ -5,7 +5,7 @@ This is a simple logger for python. It was created because I was writing code on
 This has not be uploaded to PyPI, but it can be installed using pip:
 
 ```bash
-pip install git+https://github.com/MaximSrour/py-logger.git#egg=py_logger
+pip install git+https://github.com/MaximSrour/py-logger.git#egg=pylogger
 ```
 
 ## Usage

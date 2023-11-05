@@ -4,8 +4,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name="py-logger",
-    version="0.0.5",
+    name="pylogger",
+    version="0.0.6",
     packages=find_packages(),
     author="Maxim Srour",
     author_email="maxim.srour@gmail.com",
