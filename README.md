@@ -5,18 +5,18 @@ This is a simple logger for python. It was created because I was writing code on
 This has not be uploaded to PyPI, but it can be installed using pip:
 
 ```bash
-pip install git+https://github.com/MaximSrour/logger.git#egg=logger
+pip install git+https://github.com/MaximSrour/py-logger.git#egg=py_logger
 ```
 
 ## Usage
 
 ```python
-from logger import Logger
+from py_logger import Logger
 
 if __name__ == '__main__':
     logger = Logger.init()
 
-Logger.log_info("Something happened")
+Logger.info("Something happened")
 ```
 
 The reason for the main code to initialise the logger is so that any other packages that use the logger will save their logs to the same file. This way, running your main program will cause all logs to be saved into the same file, whereas if you are testing a package, the logs will be saved to a different file.

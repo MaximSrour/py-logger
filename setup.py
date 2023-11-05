@@ -4,8 +4,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name="logger",
-    version="0.0.4",
+    name="py-logger",
+    version="0.0.5",
     packages=find_packages(),
     author="Maxim Srour",
     author_email="maxim.srour@gmail.com",
@@ -14,7 +14,7 @@ setup(
     long_description_content_type="text/markdown",
     license='MIT',
     keywords='your package keywords',
-    url="https://github.com/MaximSrour/logger",
+    url="https://github.com/MaximSrour/py-logger",
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
