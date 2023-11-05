@@ -46,7 +46,7 @@ class Logger:
         Logger.LOG_FILE_NAME = f"./.logs/LOG_{now.date().strftime('%Y%m%d')}-{now.time().strftime('%H%M%S')}.log"
         return Logger.LOG_FILE_NAME
 
-    def use_last_log_file() -> str:
+    def __use_last_log_file() -> str:
         """
         Find the last log file in the .log directory
 
@@ -68,7 +68,7 @@ class Logger:
         Logger.LOG_FILE_NAME = "./.logs/" + log_files[-1]
         return Logger.LOG_FILE_NAME
     
-    def get_scope() -> str:
+    def __get_scope() -> str:
         """
         Get the name of the function that called this function
 
@@ -82,9 +82,9 @@ class Logger:
         except Exception as e:
             scope = inspect.stack()[Logger.DEPTH][1].split("/")[-1].split(".")[0]
 
-        return Logger.color_text(scope + "." + caller, Logger.GREEN) + ": "
+        return Logger.__color_text(scope + "." + caller, Logger.GREEN) + ": "
 
-    def color_text(message: str, fg_color_option: int = None, bg_color_option: int = None) -> str:
+    def __color_text(message: str, fg_color_option: int = None, bg_color_option: int = None) -> str:
         """
         Color a string
 
@@ -115,11 +115,11 @@ class Logger:
             try:
                 print(message, file=target_output)
             except Exception as e:
-                Logger.log_error(f"Unable to print to {target_output} - {e}")
+                Logger.error(f"Unable to print to {target_output} - {e}")
 
         if not suppress_log:
             if Logger.LOG_FILE_NAME == None:
-                Logger.use_last_log_file()
+                Logger.__use_last_log_file()
 
             now = datetime.datetime.now()
             message = f"[{now.date().strftime('%Y/%m/%d')}-{now.time().strftime('%H:%M:%S.%f')}] {message}"
@@ -127,52 +127,52 @@ class Logger:
             with open(Logger.LOG_FILE_NAME, "a") as log_file:
                 print(Logger.ANSI_ESCAPE.sub('', message), file=log_file)
     
-    def log_header(message: str, suppress_log = False) -> None:
+    def header(message: str, suppress_log = False) -> None:
         """
         Log a header
 
         @param {str} header - The header to log
         """
 
-        Logger.log(Logger.color_text(message, Logger.PURPLE), sys.stdout, suppress_log)
+        Logger.log(Logger.__color_text(message, Logger.PURPLE), sys.stdout, suppress_log)
 
-    def log_info(message: str, suppress_log = False) -> None:
+    def info(message: str, suppress_log = False) -> None:
         """
         Log an info message
 
         @param {str} info - The info message to log
         """
 
-        Logger.log(Logger.color_text("INFO", Logger.LIGHT_BLUE) + ": " + Logger.get_scope() + message, sys.stdout, suppress_log)
+        Logger.log(Logger.__color_text("INFO", Logger.LIGHT_BLUE) + ": " + Logger.__get_scope() + message, sys.stdout, suppress_log)
     
-    def log_warning(message: str, suppress_log = False) -> None:
+    def warning(message: str, suppress_log = False) -> None:
         """
         Log a warning
 
         @param {str} warning - The warning to log
         """
 
-        Logger.log(Logger.color_text("WARNING", Logger.ORANGE) + ": " + Logger.get_scope() + message, sys.stderr, suppress_log)
+        Logger.log(Logger.__color_text("WARNING", Logger.ORANGE) + ": " + Logger.__get_scope() + message, sys.stderr, suppress_log)
     
-    def log_error(message: str, suppress_log = False) -> None:
+    def error(message: str, suppress_log = False) -> None:
         """
         Log an error
 
         @param {str} error - The error to log
         """
 
-        Logger.log(Logger.color_text("ERROR", Logger.LIGHT_RED) + ": " + Logger.get_scope() + message, sys.stderr, suppress_log)
+        Logger.log(Logger.__color_text("ERROR", Logger.LIGHT_RED) + ": " + Logger.__get_scope() + message, sys.stderr, suppress_log)
 
-    def log_critical(message: str, suppress_log = False) -> None:
+    def critical(message: str, suppress_log = False) -> None:
         """
         Log a critical error
 
         @param {str} error - The error to log
         """
 
-        Logger.log(Logger.color_text("CRITICAL", Logger.WHITE, Logger.LIGHT_RED) + ": " + Logger.get_scope() + message, sys.stderr, suppress_log)
+        Logger.log(Logger.__color_text("CRITICAL", Logger.WHITE, Logger.LIGHT_RED) + ": " + Logger.__get_scope() + message, sys.stderr, suppress_log)
 
-    def log_debug(message: str, suppress_stdout = True, suppress_log = False) -> None:
+    def debug(message: str, suppress_stdout = True, suppress_log = False) -> None:
         """
         Log a debug message
 
@@ -183,40 +183,40 @@ class Logger:
         if not suppress_stdout:
             file = sys.stdout
 
-        Logger.log(Logger.color_text("DEBUG", Logger.WHITE, Logger.LIGHT_BLUE) + ": " + Logger.get_scope() + message, file, suppress_log)
+        Logger.log(Logger.__color_text("DEBUG", Logger.WHITE, Logger.LIGHT_BLUE) + ": " + Logger.__get_scope() + message, file, suppress_log)
     
-    def log_test(test_name: str, suppress_log = False) -> None:
+    def test(test_name: str, suppress_log = False) -> None:
         """
         Log a test being run
 
         @param {str} test_name - The name of the test
         """
 
-        Logger.log("Running test: " + Logger.color_text(test_name, Logger.LIGHT_BLUE), sys.stdout, suppress_log)
+        Logger.log("Running test: " + Logger.__color_text(test_name, Logger.LIGHT_BLUE), sys.stdout, suppress_log)
     
-    def log_subtest(subtest_name: str, suppress_log = False) -> None:
+    def subtest(subtest_name: str, suppress_log = False) -> None:
         """
         Log a test being run
 
         @param {str} test_name - The name of the test
         """
 
-        Logger.log("Testing: " + Logger.color_text(subtest_name, Logger.LIGHT_CYAN), sys.stdout, suppress_log)
+        Logger.log("Testing: " + Logger.__color_text(subtest_name, Logger.LIGHT_CYAN), sys.stdout, suppress_log)
 
 def main():
     Logger.init()
-    Logger.log_header("Running Logger program")
+    Logger.header("Running Logger program")
 
-    Logger.log_info("This is an info message")
-    Logger.log_warning("This is a warning message")
-    Logger.log_error("This is an error message")
-    Logger.log_critical("This is a critical message")
+    Logger.info("This is an info message")
+    Logger.warning("This is a warning message")
+    Logger.error("This is an error message")
+    Logger.critical("This is a critical message")
 
-    Logger.log_debug("This is a suppressed debug message")
-    Logger.log_debug("This is a non-suppressed debug message", suppress_stdout=False)
+    Logger.debug("This is a suppressed debug message")
+    Logger.debug("This is a non-suppressed debug message", suppress_stdout=False)
 
-    Logger.log_test("This is a test")
-    Logger.log_subtest("This is a subtest")
+    Logger.test("This is a test")
+    Logger.subtest("This is a subtest")
 
     Logger.log("This is a normal message")
 
