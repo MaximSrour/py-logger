@@ -44,6 +44,9 @@ class Logger:
         now = datetime.datetime.now()
 
         Logger.LOG_FILE_NAME = f"./.logs/LOG_{now.date().strftime('%Y%m%d')}-{now.time().strftime('%H%M%S')}.log"
+        with open(Logger.LOG_FILE_NAME, "w") as log_file:
+            log_file.write("")
+
         return Logger.LOG_FILE_NAME
 
     def __use_last_log_file() -> str:
@@ -64,7 +67,7 @@ class Logger:
             return None
 
         log_files.sort()
-
+        
         Logger.LOG_FILE_NAME = "./.logs/" + log_files[-1]
         return Logger.LOG_FILE_NAME
     
@@ -109,6 +112,8 @@ class Logger:
         Log a message
 
         @param {str} message - The message to log
+        @param {str} target_output - The output to print the message to
+        @param {bool} suppress_log - Whether or not to suppress the log
         """
 
         if target_output != None:

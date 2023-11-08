@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="pylogger",
-    version="0.0.6",
+    version="0.0.7",
     packages=find_packages(),
     author="Maxim Srour",
     author_email="maxim.srour@gmail.com",
